@@ -1,6 +1,7 @@
 from aiogram import Bot, Dispatcher, types
 from aiogram.utils import executor
 from environs import Env
+from filters import MessageFilter, CallbackFilter
 
 # Get env variables
 env = Env()
@@ -15,12 +16,12 @@ bot = Bot(token=BOT_TOKEN)
 dp = Dispatcher(bot)
 
 # Get Message type updates
-@dp.message_handler()
+@dp.message_handler(MessageFilter())
 async def answer_for_message(message: types.Message):
     await message.reply(TEXT)
 
 # Get CallbackQuery type updates
-@dp.callback_query_handler()
+@dp.callback_query_handler(CallbackFilter())
 async def answer_for_callback(call: types.CallbackQuery):
     await call.answer()
     await call.message.reply(TEXT)
